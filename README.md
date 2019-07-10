@@ -15,9 +15,9 @@ yarn run serve
 yarn run build
 ```
 
-### Run your tests
+### Compiles and minifies for preview
 ```
-yarn run test
+yarn run preview
 ```
 
 ### Lints and fixes files
