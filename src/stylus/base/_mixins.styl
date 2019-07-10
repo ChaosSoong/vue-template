@@ -1,0 +1,31 @@
+/**
+ * Mixins
+ *
+ * 定义 Mixins 以 `_` 开头
+ * 定义 Variable 以 `$` 开头
+ */
+
+/**
+ * 设置边框圆角
+ * 使用:
+ * @border-raduis 2px
+ */
+_border-radius()
+  -webkit-border-radius arguments
+  -moz-border-radius arguments
+  border-radius arguments
+
+_border()
+  border arguments
+
+/**
+ * 设置阴影
+ * 使用:
+ * @box-shadow 2px 1px 10px red
+ */
+_box-shadow()
+  -webkit-box-shadow arguments
+  -moz-box-shadow arguments
+  -ms-box-shadow arguments
+  -o-box-shadow arguments
+  box-shadow arguments
