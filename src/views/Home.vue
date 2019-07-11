@@ -23,10 +23,10 @@
                 ><router-link to="/home/judge">评委管理</router-link></span
               >
             </el-menu-item>
-            <el-menu-item index="3">
+            <!-- <el-menu-item index="3">
               <i class="el-icon-setting"></i>
               <span slot="title"><router-link to="/">登录</router-link></span>
-            </el-menu-item>
+            </el-menu-item> -->
           </el-menu></el-aside
         >
         <el-main>

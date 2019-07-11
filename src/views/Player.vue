@@ -60,9 +60,9 @@
           <el-button @click="handlerDetail(scope.row)" type="text" size="small"
             >查看</el-button
           >
-          <el-button type="text" size="small" @click="handlerEdit(scope.row)"
+          <!-- <el-button type="text" size="small" @click="handlerEdit(scope.row)"
             >编辑</el-button
-          >
+          > -->
         </template>
       </el-table-column>
     </el-table>
@@ -128,7 +128,23 @@ export default {
       this.getList();
     },
     submit() {},
-    exportExcel() {},
+    exportExcel() {
+      get("/output_contestant", {
+        token: localStorage.getItem("token"),
+        page_number: this.result.currentPage,
+        page_size: 10
+      })
+        .then(res => {
+          console.log(res);
+          if (res.successful) {
+            this.playerList = res.data.list;
+            this.result = res.data;
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     handlerEdit() {},
     handlerDetail() {}
   }
