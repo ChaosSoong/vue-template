@@ -12,6 +12,7 @@
   "dependencies": {
     "core-js": "^2.6.5",
     "normalize.css": "^8.0.1",
+    "vant": "^2.0.7",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3"
   },
@@ -21,6 +22,7 @@
     "@vue/cli-service": "^3.9.0",
     "@vue/eslint-config-prettier": "^4.0.1",
     "babel-eslint": "^10.0.1",
+    "babel-plugin-import": "^1.8.0",
     "compression-webpack-plugin": "^3.0.0",
     "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
@@ -35,6 +37,7 @@
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "vue-cli-plugin-style-resources-loader": "^0.1.3",
+    "vue-cli-plugin-vant": "^1.0.1",
     "vue-cli-plugin-vconsole": "^1.0.1",
     "vue-template-compiler": "^2.6.10"
   },
