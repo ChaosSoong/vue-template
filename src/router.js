@@ -16,21 +16,24 @@ export default new Router({
     {
       path: '/home',
       name: 'home',
+      redirect: '/home/player',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () =>
-        import(/* webpackChunkName: "about" */ './views/Home.vue')
-    },
-    {
-      name: '/player',
-      path: '/player',
-      component: () => import('./views/Player.vue')
-    },
-    {
-      name: '/judge',
-      path: '/judge',
-      component: () => import('./views/Judge.vue')
+        import(/* webpackChunkName: "about" */ './views/Home.vue'),
+      children: [
+        {
+          name: '/player',
+          path: 'player',
+          component: () => import('./views/Player.vue')
+        },
+        {
+          name: '/judge',
+          path: 'judge',
+          component: () => import('./views/Judge.vue')
+        }
+      ]
     }
   ]
 })

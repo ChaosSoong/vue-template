@@ -1,16 +1,13 @@
 <template>
   <div id="app">
-    <Home></Home>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Home from "./views/Home";
+// import Home from "./views/Home";
 export default {
-  name: "app",
-  components: {
-    Home
-  }
+  name: "app"
 };
 </script>
 

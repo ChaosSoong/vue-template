@@ -65,28 +65,37 @@ export default {
     };
   },
   created() {
-    get("/get_judge_list", {
-      token: localStorage.getItem("token")
-    })
-      .then(res => {
-        console.log(res);
-        if (res.successful) {
-          this.playerList = res.data.list;
-          this.result = res.data;
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    this.getList();
   },
   methods: {
     onPageCurrentChange(pageNum) {
       //  切换页码
       console.log(pageNum);
+      this.result.currentPage = pageNum;
+      this.getList();
     },
     onPageSizeChange(pageSize) {
       //  切换页数
       console.log(pageSize);
+      this.result.currentPage = pageSize;
+      this.getList();
+    },
+    getList() {
+      get("/get_judge_list", {
+        token: localStorage.getItem("token"),
+        page_number: this.result.currentPage,
+        page_size: 10
+      })
+        .then(res => {
+          console.log(res);
+          if (res.successful) {
+            this.playerList = res.data.list;
+            this.result = res.data;
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     submit() {},
     exportExcel() {},

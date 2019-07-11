@@ -14,13 +14,13 @@
             <el-menu-item index="1">
               <i class="el-icon-menu"></i>
               <span slot="title"
-                ><router-link to="/player">选手管理</router-link></span
+                ><router-link to="/home/player">选手管理</router-link></span
               >
             </el-menu-item>
             <el-menu-item index="2">
               <i class="el-icon-document"></i>
               <span slot="title"
-                ><router-link to="/judge">评委管理</router-link></span
+                ><router-link to="/home/judge">评委管理</router-link></span
               >
             </el-menu-item>
             <el-menu-item index="3">

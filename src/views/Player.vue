@@ -20,13 +20,41 @@
       </el-form-item>
     </el-form>
     <el-table :data="playerList" border style="width: 100%">
-      <el-table-column prop="no" label="序号"> </el-table-column>
-      <el-table-column prop="number" label="编号"> </el-table-column>
-      <el-table-column prop="telephone" label="手机号"> </el-table-column>
-      <el-table-column prop="area" label="赛区"> </el-table-column>
-      <el-table-column prop="group_flag" label="是否团体"> </el-table-column>
-      <el-table-column prop="form" label="参赛类型"> </el-table-column>
-      <el-table-column prop="agency" label="agency"> </el-table-column>
+      <el-table-column label="序号">
+        <template slot-scope="scope"
+          >{{ scope.row.no }}
+        </template></el-table-column
+      >
+      <el-table-column prop="number" label="编号">
+        <template slot-scope="scope"
+          >{{ scope.row.no }}
+        </template></el-table-column
+      >
+      <el-table-column prop="telephone" label="手机号">
+        <template slot-scope="scope"
+          >{{ scope.row.telephone }}
+        </template></el-table-column
+      >
+      <el-table-column prop="area" label="赛区">
+        <template slot-scope="scope"
+          >{{ scope.row.area }}
+        </template></el-table-column
+      >
+      <el-table-column prop="group_flag" label="是否团体">
+        <template slot-scope="scope"
+          >{{ scope.row.group_flag }}
+        </template></el-table-column
+      >
+      <el-table-column prop="form" label="参赛类型">
+        <template slot-scope="scope"
+          >{{ scope.row.form }}
+        </template></el-table-column
+      >
+      <el-table-column prop="agency" label="agency">
+        <template slot-scope="scope"
+          >{{ scope.row.agency }}
+        </template></el-table-column
+      >
       <el-table-column label="操作" width="100">
         <template slot-scope="scope">
           <el-button @click="handlerDetail(scope.row)" type="text" size="small"
@@ -67,28 +95,37 @@ export default {
     };
   },
   created() {
-    get("/get_contestant_list", {
-      token: localStorage.getItem("token")
-    })
-      .then(res => {
-        console.log(res);
-        if (res.successful) {
-          this.playerList = res.data.list;
-          this.result = res.data;
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    this.getList();
   },
   methods: {
+    getList() {
+      get("/get_contestant_list", {
+        token: localStorage.getItem("token"),
+        page_number: this.result.currentPage,
+        page_size: 10
+      })
+        .then(res => {
+          console.log(res);
+          if (res.successful) {
+            this.playerList = res.data.list;
+            this.result = res.data;
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     onPageCurrentChange(pageNum) {
       //  切换页码
       console.log(pageNum);
+      this.result.currentPage = pageNum;
+      this.getList();
     },
     onPageSizeChange(pageSize) {
       //  切换页数
       console.log(pageSize);
+      this.result.currentPage = pageSize;
+      this.getList();
     },
     submit() {},
     exportExcel() {},
