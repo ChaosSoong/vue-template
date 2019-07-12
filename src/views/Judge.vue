@@ -2,15 +2,27 @@
   <div class="player">
     <el-form :inline="true" :model="form">
       <el-form-item label="评委编号">
-        <el-input v-model="form.user" placeholder="评委编号"></el-input>
+        <el-input v-model="q" placeholder="评委编号">
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="getUser"
+          ></el-button>
+        </el-input>
       </el-form-item>
       <el-form-item label="报名时间">
         <el-date-picker
-          v-model="form.date"
-          type="daterange"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          v-model="form.starttime"
+          format="yyyyMMdd"
+          value-format="yyyyMMdd"
+        >
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item label="结束时间">
+        <el-date-picker
+          v-model="form.endtime"
+          format="yyyyMMdd"
+          value-format="yyyyMMdd"
         >
         </el-date-picker>
       </el-form-item>
@@ -39,7 +51,7 @@
     <div class="search-form-pagination">
       <el-pagination
         :current-page="result.currentPage"
-        :page-sizes="[10, 20, 50]"
+        :page-sizes="[5, 10, 20]"
         :page-size="result.pageSize"
         layout="total, prev, pager, next, sizes, jumper"
         :total="result.item_total"
@@ -48,6 +60,22 @@
       >
       </el-pagination>
     </div>
+    <el-dialog title="详情" :visible.sync="dialogVisible" width="80%">
+      <el-form size="small" label-width="100px" :inline="true">
+        <el-form-item label="姓名:">{{ userInfo.name }} </el-form-item>
+        <el-form-item label="赛区:">{{ userInfo.area }} </el-form-item>
+        <el-form-item label="参赛节目:">{{ userInfo.form }} </el-form-item>
+        <el-form-item label="是否团体:"
+          >{{ userInfo.group_flag ? "是" : "否" }}
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false"
+          >确 定</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -58,10 +86,14 @@ export default {
     return {
       form: {
         user: "",
-        date: ""
+        starttime: "",
+        endtime: ""
       },
+      q: "",
       playerList: [],
-      result: { item_total: 0, page_total: 0, currentPage: 1 }
+      result: { item_total: 0, page_total: 0, currentPage: 1 },
+      dialogVisible: false,
+      userInfo: {}
     };
   },
   created() {
@@ -84,7 +116,9 @@ export default {
       get("/get_judge_list", {
         token: localStorage.getItem("token"),
         page_number: this.result.currentPage,
-        page_size: 10
+        page_size: 10,
+        starttime: this.form.starttime,
+        endtime: this.form.endtime
       })
         .then(res => {
           console.log(res);
@@ -107,6 +141,36 @@ export default {
     handlerEdit() {},
     handlerDetail(row) {
       console.log(row);
+      this.dialogVisible = true;
+      get("/judge_info", {
+        token: localStorage.getItem("token"),
+        q: row.no
+      })
+        .then(res => {
+          console.log(res);
+          if (res.successful) {
+            this.userInfo = res.data || {};
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getUser() {
+      this.dialogVisible = true;
+      get("/judge_info", {
+        token: localStorage.getItem("token"),
+        q: this.q
+      })
+        .then(res => {
+          console.log(res);
+          if (res.successful) {
+            this.userInfo = res.data;
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 };

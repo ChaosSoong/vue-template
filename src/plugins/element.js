@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import Vue from "vue";
 import {
   Button,
   Form,
@@ -15,22 +15,24 @@ import {
   DatePicker,
   Table,
   TableColumn,
-  Pagination
-} from 'element-ui'
+  Pagination,
+  Dialog
+} from "element-ui";
 
-Vue.use(Button)
-Vue.use(Form)
-Vue.use(FormItem)
-Vue.use(Input)
-// Vue.use(Message)
-Vue.use(Menu)
-Vue.use(Submenu)
-Vue.use(MenuItem)
-Vue.use(Container)
-Vue.use(Header)
-Vue.use(Main)
-Vue.use(Aside)
-Vue.use(DatePicker)
-Vue.use(TableColumn)
-Vue.use(Table)
-Vue.use(Pagination)
+Vue.use(Button);
+Vue.use(Form);
+Vue.use(FormItem);
+Vue.use(Input);
+Vue.use(Message);
+Vue.use(Menu);
+Vue.use(Submenu);
+Vue.use(MenuItem);
+Vue.use(Container);
+Vue.use(Header);
+Vue.use(Main);
+Vue.use(Aside);
+Vue.use(DatePicker);
+Vue.use(TableColumn);
+Vue.use(Table);
+Vue.use(Pagination);
+Vue.use(Dialog);

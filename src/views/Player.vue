@@ -2,15 +2,27 @@
   <div class="player">
     <el-form :inline="true" :model="form">
       <el-form-item label="选手编号">
-        <el-input v-model="form.user" placeholder="选手编号"></el-input>
+        <el-input v-model="q" placeholder="选手编号">
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="getUser"
+          ></el-button>
+        </el-input>
       </el-form-item>
-      <el-form-item label="报名时间">
+      <el-form-item label="开始时间">
         <el-date-picker
-          v-model="form.date"
-          type="daterange"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          v-model="form.starttime"
+          format="yyyyMMdd"
+          value-format="yyyyMMdd"
+        >
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item label="结束时间">
+        <el-date-picker
+          v-model="form.endtime"
+          format="yyyyMMdd"
+          value-format="yyyyMMdd"
         >
         </el-date-picker>
       </el-form-item>
@@ -78,6 +90,22 @@
       >
       </el-pagination>
     </div>
+    <el-dialog title="详情" :visible.sync="dialogVisible" width="80%">
+      <el-form size="small" label-width="100px" :inline="true">
+        <el-form-item label="姓名:">{{ userInfo.name }} </el-form-item>
+        <el-form-item label="赛区:">{{ userInfo.area }} </el-form-item>
+        <el-form-item label="参赛节目:">{{ userInfo.form }} </el-form-item>
+        <el-form-item label="是否团体:"
+          >{{ userInfo.group_flag ? "是" : "否" }}
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false"
+          >确 定</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -86,23 +114,46 @@ export default {
   name: "player",
   data() {
     return {
+      q: "谭梦",
       form: {
         user: "",
-        date: ""
+        date: "",
+        starttime: "",
+        endtime: ""
       },
       playerList: [],
-      result: { item_total: 0, page_total: 0, currentPage: 1 }
+      result: { item_total: 0, page_total: 0, currentPage: 1 },
+      dialogVisible: false,
+      userInfo: {}
     };
   },
   created() {
     this.getList();
   },
   methods: {
+    getUser() {
+      this.dialogVisible = true;
+      get("/get_contestant_info", {
+        token: localStorage.getItem("token"),
+        q: this.q
+      })
+        .then(res => {
+          console.log(res);
+          if (res.successful) {
+            this.userInfo = res.data;
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     getList() {
       get("/get_contestant_list", {
         token: localStorage.getItem("token"),
         page_number: this.result.currentPage,
-        page_size: 10
+        page_size: 10,
+        starttime: this.form.starttime,
+        endtime: this.form.endtime
       })
         .then(res => {
           console.log(res);
@@ -127,22 +178,33 @@ export default {
       this.result.currentPage = pageSize;
       this.getList();
     },
-    submit() {},
+    submit() {
+      console.log(this.form);
+      this.getList();
+    },
     exportExcel() {
       window.open(
         "http://syxj.snowland.ltd/output_contestant?token=" +
           localStorage.getItem("token")
       );
     },
-    handlerEdit() {},
-    handlerDetail() {},
-    download(blobUrl) {
-      const a = document.createElement("a");
-      a.style.display = "none";
-      a.download = new Date().toString() + "";
-      a.href = blobUrl;
-      a.click();
-      document.body.removeChild(a);
+    // handlerEdit() {},
+    handlerDetail(row) {
+      console.log(row);
+      this.dialogVisible = true;
+      get("/get_contestant_info", {
+        token: localStorage.getItem("token"),
+        q: row.no
+      })
+        .then(res => {
+          console.log(res);
+          if (res.successful) {
+            this.userInfo = res.data || {};
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 };
