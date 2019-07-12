@@ -16,7 +16,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submit">查询</el-button>
-        <el-button @click="exportExcel">导出表格</el-button>
+        <!-- <el-button @click="exportExcel">导出表格</el-button> -->
       </el-form-item>
     </el-form>
     <el-table :data="playerList" border style="width: 100%">
@@ -30,9 +30,9 @@
           <el-button @click="handlerDetail(scope.row)" type="text" size="small"
             >查看</el-button
           >
-          <el-button type="text" size="small" @click="handlerEdit(scope.row)"
+          <!-- <el-button type="text" size="small" @click="handlerEdit(scope.row)"
             >编辑</el-button
-          >
+          > -->
         </template>
       </el-table-column>
     </el-table>
@@ -98,9 +98,16 @@ export default {
         });
     },
     submit() {},
-    exportExcel() {},
+    exportExcel() {
+      window.open(
+        "http://syxj.snowland.ltd/output_contestant?token=" +
+          localStorage.getItem("token")
+      );
+    },
     handlerEdit() {},
-    handlerDetail() {}
+    handlerDetail(row) {
+      console.log(row);
+    }
   }
 };
 </script>

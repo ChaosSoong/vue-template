@@ -10,19 +10,17 @@
             @open="handleOpen"
             @close="handleClose"
             :collapse="isCollapse"
-          >
-            <el-menu-item index="1">
-              <i class="el-icon-menu"></i>
-              <span slot="title"
-                ><router-link to="/home/player">选手管理</router-link></span
-              >
-            </el-menu-item>
-            <el-menu-item index="2">
-              <i class="el-icon-document"></i>
-              <span slot="title"
-                ><router-link to="/home/judge">评委管理</router-link></span
-              >
-            </el-menu-item>
+            ><router-link to="/home/player">
+              <el-menu-item index="1">
+                <i class="el-icon-menu"></i>
+                <span slot="title">选手管理</span>
+              </el-menu-item></router-link
+            ><router-link to="/home/judge">
+              <el-menu-item index="2">
+                <i class="el-icon-document"></i>
+                <span slot="title">评委管理</span>
+              </el-menu-item></router-link
+            >
             <!-- <el-menu-item index="3">
               <i class="el-icon-setting"></i>
               <span slot="title"><router-link to="/">登录</router-link></span>

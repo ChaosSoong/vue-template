@@ -69,7 +69,7 @@
     <div class="search-form-pagination">
       <el-pagination
         :current-page="result.currentPage"
-        :page-sizes="[20, 50, 100]"
+        :page-sizes="[5, 10, 20]"
         :page-size="result.pageSize"
         layout="total, prev, pager, next, sizes, jumper"
         :total="result.item_total"
@@ -129,24 +129,21 @@ export default {
     },
     submit() {},
     exportExcel() {
-      get("/output_contestant", {
-        token: localStorage.getItem("token"),
-        page_number: this.result.currentPage,
-        page_size: 10
-      })
-        .then(res => {
-          console.log(res);
-          if (res.successful) {
-            this.playerList = res.data.list;
-            this.result = res.data;
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      window.open(
+        "http://syxj.snowland.ltd/output_contestant?token=" +
+          localStorage.getItem("token")
+      );
     },
     handlerEdit() {},
-    handlerDetail() {}
+    handlerDetail() {},
+    download(blobUrl) {
+      const a = document.createElement("a");
+      a.style.display = "none";
+      a.download = new Date().toString() + "";
+      a.href = blobUrl;
+      a.click();
+      document.body.removeChild(a);
+    }
   }
 };
 </script>
