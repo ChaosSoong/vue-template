@@ -16,14 +16,16 @@ import {
   Table,
   TableColumn,
   Pagination,
-  Dialog
+  Dialog,
+  Select,
+  Option
 } from "element-ui";
 
 Vue.use(Button);
 Vue.use(Form);
 Vue.use(FormItem);
 Vue.use(Input);
-Vue.use(Message);
+Vue.component(Message.name, Message);
 Vue.use(Menu);
 Vue.use(Submenu);
 Vue.use(MenuItem);
@@ -36,3 +38,5 @@ Vue.use(TableColumn);
 Vue.use(Table);
 Vue.use(Pagination);
 Vue.use(Dialog);
+Vue.use(Select);
+Vue.use(Option);

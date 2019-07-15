@@ -62,12 +62,17 @@
     </div>
     <el-dialog title="详情" :visible.sync="dialogVisible" width="80%">
       <el-form size="small" label-width="100px" :inline="true">
-        <el-form-item label="姓名:">{{ userInfo.name }} </el-form-item>
-        <el-form-item label="赛区:">{{ userInfo.area }} </el-form-item>
-        <el-form-item label="参赛节目:">{{ userInfo.form }} </el-form-item>
-        <el-form-item label="是否团体:"
-          >{{ userInfo.group_flag ? "是" : "否" }}
+        <el-form-item label="姓名:">{{ userInfo.realname }} </el-form-item>
+        <el-form-item label="电话:">{{ userInfo.telephone }} </el-form-item>
+        <el-form-item label="性别:"
+          >{{ userInfo.sex === "M" ? "男" : "女" }}
         </el-form-item>
+        <el-form-item label="邮箱:">{{ userInfo.email }} </el-form-item>
+        <el-form-item label="身份证:">{{ userInfo.IDcard }} </el-form-item>
+        <el-form-item label="个人描述:"
+          >{{ userInfo.description }}
+        </el-form-item>
+        <el-form-item label="推荐人:">{{ userInfo.recommender }} </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
@@ -79,7 +84,7 @@
   </div>
 </template>
 <script>
-import { get } from "../utils/";
+import { get, post } from "../utils/";
 export default {
   name: "player",
   data() {
@@ -89,6 +94,8 @@ export default {
         starttime: "",
         endtime: ""
       },
+      areas: [],
+      area: "",
       q: "",
       playerList: [],
       result: { item_total: 0, page_total: 0, currentPage: 1 },
@@ -125,13 +132,17 @@ export default {
           if (res.successful) {
             this.playerList = res.data.list;
             this.result = res.data;
+          } else {
+            this.$message(res.message);
           }
         })
         .catch(err => {
           console.log(err);
         });
     },
-    submit() {},
+    submit() {
+      this.getList();
+    },
     exportExcel() {
       window.open(
         "http://syxj.snowland.ltd/output_contestant?token=" +
@@ -141,15 +152,17 @@ export default {
     handlerEdit() {},
     handlerDetail(row) {
       console.log(row);
-      this.dialogVisible = true;
-      get("/judge_info", {
+      post("/judge_info", {
         token: localStorage.getItem("token"),
-        q: row.no
+        q: row.number
       })
         .then(res => {
           console.log(res);
           if (res.successful) {
-            this.userInfo = res.data || {};
+            this.dialogVisible = true;
+            this.userInfo = res.data[0] || {};
+          } else {
+            this.$message(res.message);
           }
         })
         .catch(err => {
@@ -157,15 +170,17 @@ export default {
         });
     },
     getUser() {
-      this.dialogVisible = true;
-      get("/judge_info", {
+      post("/judge_info", {
         token: localStorage.getItem("token"),
         q: this.q
       })
         .then(res => {
           console.log(res);
           if (res.successful) {
-            this.userInfo = res.data;
+            this.dialogVisible = true;
+            this.userInfo = res.data[0] || {};
+          } else {
+            this.$message(res.message);
           }
         })
         .catch(err => {
@@ -175,10 +190,4 @@ export default {
   }
 };
 </script>
-<style lang="stylus" scoped>
-.search-form-pagination {
-  width: 100%;
-  margin: 16px 0;
-  text-align: right;
-}
-</style>
+<style lang="stylus" scoped></style>

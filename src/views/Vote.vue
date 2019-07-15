@@ -54,7 +54,7 @@
       >
       <el-table-column prop="group_flag" label="是否团体">
         <template slot-scope="scope"
-          >{{ scope.row.group_flag ? "是" : "否" }}
+          >{{ scope.row.group_flag }}
         </template></el-table-column
       >
       <el-table-column prop="form" label="参赛类型">
@@ -81,7 +81,7 @@
     <div class="search-form-pagination">
       <el-pagination
         :current-page="result.currentPage"
-        :page-sizes="[10]"
+        :page-sizes="[5, 10, 20]"
         :page-size="result.pageSize"
         layout="total, prev, pager, next, sizes, jumper"
         :total="result.item_total"

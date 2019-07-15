@@ -23,10 +23,24 @@
                 <span slot="title">评委管理</span>
               </el-menu-item>
             </router-link>
-            <!-- <el-menu-item index="3">
-              <i class="el-icon-setting"></i>
-              <span slot="title"><router-link to="/">登录</router-link></span>
-            </el-menu-item> -->
+            <router-link to="/home/account">
+              <el-menu-item index="3">
+                <i class="el-icon-document"></i>
+                <span slot="title">账号管理</span>
+              </el-menu-item>
+            </router-link>
+            <router-link to="/home/area">
+              <el-menu-item index="4">
+                <i class="el-icon-document"></i>
+                <span slot="title">赛区管理</span>
+              </el-menu-item>
+            </router-link>
+            <router-link to="/home/vote">
+              <el-menu-item index="5">
+                <i class="el-icon-document"></i>
+                <span slot="title">投票管理</span>
+              </el-menu-item>
+            </router-link>
           </el-menu>
         </el-aside>
         <el-main>

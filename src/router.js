@@ -4,7 +4,7 @@ import Login from "./views/Login.vue";
 
 Vue.use(Router);
 
-export default new Router({
+let router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
@@ -32,8 +32,28 @@ export default new Router({
           name: "/judge",
           path: "judge",
           component: () => import("./views/Judge.vue")
+        },
+        {
+          name: "/account",
+          path: "account",
+          component: () => import("./views/Account.vue")
+        },
+        {
+          name: "/area",
+          path: "area",
+          component: () => import("./views/Area.vue")
+        },
+        {
+          name: "/vote",
+          path: "vote",
+          component: () => import("./views/Vote.vue")
         }
       ]
     }
   ]
 });
+router.beforeEach((to, from, next) => {
+  console.log(to, from);
+  next();
+});
+export default router;

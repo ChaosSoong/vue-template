@@ -10,6 +10,17 @@
           ></el-button>
         </el-input>
       </el-form-item>
+      <el-form-item label="">
+        <el-select v-model="area" placeholder="请选择赛区">
+          <el-option
+            v-for="item in areas"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item label="开始时间">
         <el-date-picker
           v-model="form.starttime"
@@ -54,7 +65,7 @@
       >
       <el-table-column prop="group_flag" label="是否团体">
         <template slot-scope="scope"
-          >{{ scope.row.group_flag ? "是" : "否" }}
+          >{{ scope.row.group_flag }}
         </template></el-table-column
       >
       <el-table-column prop="form" label="参赛类型">
@@ -114,13 +125,15 @@ export default {
   name: "player",
   data() {
     return {
-      q: "谭梦",
+      q: "",
       form: {
         user: "",
         date: "",
         starttime: "",
         endtime: ""
       },
+      areas: [],
+      area: "",
       playerList: [],
       result: { item_total: 0, page_total: 0, currentPage: 1 },
       dialogVisible: false,
