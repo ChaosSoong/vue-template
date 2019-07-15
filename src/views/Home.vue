@@ -41,6 +41,20 @@
                 <span slot="title">投票管理</span>
               </el-menu-item>
             </router-link>
+            <!-- <el-submenu index="6">
+              <template slot="title">
+                <i class="el-icon-location"></i>
+                <span slot="title">多级菜单</span>
+              </template>
+              <el-menu-item index="6-1">选项1</el-menu-item>
+              <el-menu-item index="6-2">选项2</el-menu-item>
+              <el-menu-item index="1-3">选项3</el-menu-item>
+              <el-submenu index="6-4">
+                <span slot="title">选项4</span>
+                <el-menu-item index="6-4-1">选项4-1</el-menu-item>
+                <el-menu-item index="6-4-2">选项4-2</el-menu-item>
+              </el-submenu>
+            </el-submenu> -->
           </el-menu>
         </el-aside>
         <el-main>

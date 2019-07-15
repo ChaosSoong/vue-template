@@ -1,86 +1,86 @@
 <template>
   <div class="player">
-    <el-form :inline="true"
-             :model="form">
+    <el-form :inline="true" :model="form">
       <el-form-item label="">
-        <el-input v-model="q"
-                  placeholder="可通过账号姓名查询">
-          <el-button slot="append"
-                     icon="el-icon-search"
-                     @click="getUser"></el-button>
+        <el-input v-model="q" placeholder="可通过账号姓名查询">
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="getUser"
+          ></el-button>
         </el-input>
-      </el-form-item>
       </el-form-item>
       <el-form-item>
         <el-button @click="add">新增</el-button>
       </el-form-item>
     </el-form>
-    <el-table :data="playerList"
-              border
-              style="width: 100%">
+    <el-table :data="playerList" border style="width: 100%">
       <el-table-column label="no">
-        <template slot-scope="scope">{{ scope.row.no }}
-        </template></el-table-column>
-      <el-table-column prop="number"
-                       label="number">
-        <template slot-scope="scope">{{ scope.row.number }}
-        </template></el-table-column>
-      <el-table-column prop="sex"
-                       label="性别">
-        <template slot-scope="scope">{{ scope.row.sex === "F" ? "女" : "男" }}
-        </template></el-table-column>
-      <el-table-column prop="telephone"
-                       label="手机号">
-        <template slot-scope="scope">{{ scope.row.telephone }}
-        </template></el-table-column>
-      <el-table-column prop="area"
-                       label="赛区">
-        <template slot-scope="scope">{{ scope.row.area }}
-        </template></el-table-column>
-      <el-table-column prop="speciality"
-                       label="speciality">
-        <template slot-scope="scope">{{ scope.row.speciality }}
-        </template></el-table-column>
-      <el-table-column label="操作"
-                       width="100">
+        <template slot-scope="scope"
+          >{{ scope.row.no }}
+        </template></el-table-column
+      >
+      <el-table-column prop="number" label="number">
+        <template slot-scope="scope"
+          >{{ scope.row.number }}
+        </template></el-table-column
+      >
+      <el-table-column prop="sex" label="性别">
+        <template slot-scope="scope"
+          >{{ scope.row.sex === "F" ? "女" : "男" }}
+        </template></el-table-column
+      >
+      <el-table-column prop="telephone" label="手机号">
+        <template slot-scope="scope"
+          >{{ scope.row.telephone }}
+        </template></el-table-column
+      >
+      <el-table-column prop="area" label="赛区">
+        <template slot-scope="scope"
+          >{{ scope.row.area }}
+        </template></el-table-column
+      >
+      <el-table-column prop="speciality" label="speciality">
+        <template slot-scope="scope"
+          >{{ scope.row.speciality }}
+        </template></el-table-column
+      >
+      <el-table-column label="操作" width="100">
         <template slot-scope="scope">
           <!-- <el-button @click="handlerDetail(scope.row)" type="text" size="small"
             >查看</el-button
           > -->
-          <el-button type="text"
-                     size="small"
-                     @click="handlerEdit(scope.row)">编辑</el-button>
+          <el-button type="text" size="small" @click="handlerEdit(scope.row)"
+            >编辑</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
     <div class="search-form-pagination">
-      <el-pagination :current-page="result.currentPage"
-                     :page-size="result.pageSize"
-                     layout="total, prev, pager, next, sizes, jumper"
-                     :total="result.item_total"
-                     @current-change="onPageCurrentChange"
-                     @size-change="onPageSizeChange">
+      <el-pagination
+        :current-page="result.currentPage"
+        :page-size="result.pageSize"
+        layout="total, prev, pager, next, sizes, jumper"
+        :total="result.item_total"
+        @current-change="onPageCurrentChange"
+        @size-change="onPageSizeChange"
+      >
       </el-pagination>
     </div>
-    <el-dialog title="新增账户"
-               :visible.sync="dialogVisible"
-               width="60%">
-      <el-form ref="form"
-               :model="form"
-               label-width="80px">
+    <el-dialog title="新增账户" :visible.sync="dialogVisible" width="60%">
+      <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="用户名">
           <el-input v-model="form.username"></el-input>
         </el-form-item>
         <el-form-item label="密码">
-          <el-input v-model="form.password"
-                    type="password"></el-input>
+          <el-input v-model="form.password" type="password"></el-input>
         </el-form-item>
       </el-form>
-      <span slot="footer"
-            class="dialog-footer">
+      <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary"
-                   @click="dialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="dialogVisible = false"
+          >确 定</el-button
+        >
       </span>
     </el-dialog>
   </div>
@@ -89,7 +89,7 @@
 import { get } from "../utils/";
 export default {
   name: "player",
-  data () {
+  data() {
     return {
       q: "",
       form: {
@@ -104,11 +104,11 @@ export default {
       userInfo: {}
     };
   },
-  created () {
+  created() {
     this.getList();
   },
   methods: {
-    getUser () {
+    getUser() {
       get("/get_contestant_info", {
         token: localStorage.getItem("token"),
         q: this.q
@@ -126,7 +126,7 @@ export default {
           console.log(err);
         });
     },
-    getList () {
+    getList() {
       get("/get_groupadmin_list", {
         token: localStorage.getItem("token"),
         page_number: this.result.currentPage,
@@ -147,26 +147,26 @@ export default {
           console.log(err);
         });
     },
-    onPageCurrentChange (pageNum) {
+    onPageCurrentChange(pageNum) {
       //  切换页码
       console.log(pageNum);
       this.result.currentPage = pageNum;
       this.getList();
     },
-    onPageSizeChange (pageSize) {
+    onPageSizeChange(pageSize) {
       //  切换页数
       console.log(pageSize);
       this.result.currentPage = pageSize;
       this.getList();
     },
-    submit () {
+    submit() {
       console.log(this.form);
       this.getList();
     },
-    add () {
+    add() {
       this.dialogVisible = true;
     },
-    handlerEdit () { }
+    handlerEdit() {}
     // handlerDetail(row) {
     //   console.log(row);
     //   get("/get_contestant_info", {
