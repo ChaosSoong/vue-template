@@ -51,7 +51,7 @@
     <div class="search-form-pagination">
       <el-pagination
         :current-page="result.currentPage"
-        :page-sizes="[5, 10, 20]"
+        :page-sizes="[10]"
         :page-size="result.pageSize"
         layout="total, prev, pager, next, sizes, jumper"
         :total="result.item_total"

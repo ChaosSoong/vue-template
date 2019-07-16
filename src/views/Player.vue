@@ -39,7 +39,7 @@
       >
       <el-table-column prop="number" label="编号">
         <template slot-scope="scope"
-          >{{ scope.row.no }}
+          >{{ scope.row.number }}
         </template></el-table-column
       >
       <el-table-column prop="telephone" label="手机号">
@@ -62,7 +62,7 @@
           >{{ scope.row.form }}
         </template></el-table-column
       >
-      <el-table-column prop="agency" label="agency">
+      <el-table-column prop="agency" label="是否已签约公司">
         <template slot-scope="scope"
           >{{ scope.row.agency }}
         </template></el-table-column
@@ -91,13 +91,36 @@
       </el-pagination>
     </div>
     <el-dialog title="详情" :visible.sync="dialogVisible" width="80%">
-      <el-form size="small" label-width="100px" :inline="true">
+      <el-form
+        size="small"
+        label-width="100px"
+        :inline="true"
+        label-position="left"
+      >
         <el-form-item label="姓名:">{{ userInfo.name }} </el-form-item>
         <el-form-item label="赛区:">{{ userInfo.area }} </el-form-item>
         <el-form-item label="参赛节目:">{{ userInfo.form }} </el-form-item>
+        <el-form-item label="三方账号:">{{ userInfo.account }} </el-form-item>
+        <el-form-item label="团体人数:"
+          >{{ userInfo.group_count }}
+        </el-form-item>
+        <el-form-item label="团体领导:">{{ userInfo.leader }} </el-form-item>
+        <el-form-item label="个人描述:"
+          >{{ userInfo.description }}
+        </el-form-item>
+        <el-form-item label="是否已签约公司:"
+          >{{ userInfo.agency }}
+        </el-form-item>
         <el-form-item label="是否团体:"
           >{{ userInfo.group_flag ? "是" : "否" }}
         </el-form-item>
+        <div>
+          <img
+            style="width:50px;height:50px"
+            :src="'http://syxj.snowland.ltd' + userInfo.photo"
+            alt=""
+          />
+        </div>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>

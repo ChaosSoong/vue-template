@@ -15,12 +15,12 @@
       </el-form-item>
     </el-form>
     <el-table :data="playerList" border style="width: 100%">
-      <el-table-column label="no">
+      <el-table-column label="序号">
         <template slot-scope="scope"
           >{{ scope.row.no }}
         </template></el-table-column
       >
-      <el-table-column prop="number" label="number">
+      <el-table-column prop="number" label="编号">
         <template slot-scope="scope"
           >{{ scope.row.number }}
         </template></el-table-column
@@ -59,7 +59,7 @@
     <div class="search-form-pagination">
       <el-pagination
         :current-page="result.currentPage"
-        :page-size="result.pageSize"
+        :page-sizes="[10]"
         layout="total, prev, pager, next, sizes, jumper"
         :total="result.item_total"
         @current-change="onPageCurrentChange"
