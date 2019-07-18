@@ -1,8 +1,8 @@
 <template>
   <div class="player">
     <el-form :inline="true" :model="form">
-      <el-form-item label="选手编号">
-        <el-input v-model="q" placeholder="选手编号">
+      <el-form-item label="赛区编号">
+        <el-input v-model="q" placeholder="赛区编号">
           <el-button
             slot="append"
             icon="el-icon-search"
@@ -10,72 +10,19 @@
           ></el-button>
         </el-input>
       </el-form-item>
-      <el-form-item label="">
-        <el-select v-model="area" placeholder="请选择赛区">
-          <el-option
-            v-for="item in areas"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          >
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="开始时间">
-        <el-date-picker
-          v-model="form.starttime"
-          format="yyyyMMdd"
-          value-format="yyyyMMdd"
-        >
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="结束时间">
-        <el-date-picker
-          v-model="form.endtime"
-          format="yyyyMMdd"
-          value-format="yyyyMMdd"
-        >
-        </el-date-picker>
-      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submit">查询</el-button>
-        <el-button @click="exportExcel">导出表格</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="playerList" border style="width: 100%">
       <el-table-column label="序号">
         <template slot-scope="scope"
-          >{{ scope.row.no }}
-        </template></el-table-column
-      >
-      <el-table-column prop="number" label="编号">
-        <template slot-scope="scope"
-          >{{ scope.row.no }}
-        </template></el-table-column
-      >
-      <el-table-column prop="telephone" label="手机号">
-        <template slot-scope="scope"
-          >{{ scope.row.telephone }}
+          >{{ scope.row.id }}
         </template></el-table-column
       >
       <el-table-column prop="area" label="赛区">
         <template slot-scope="scope"
-          >{{ scope.row.area }}
-        </template></el-table-column
-      >
-      <el-table-column prop="group_flag" label="是否团体">
-        <template slot-scope="scope"
-          >{{ scope.row.group_flag }}
-        </template></el-table-column
-      >
-      <el-table-column prop="form" label="参赛类型">
-        <template slot-scope="scope"
-          >{{ scope.row.form }}
-        </template></el-table-column
-      >
-      <el-table-column prop="agency" label="agency">
-        <template slot-scope="scope"
-          >{{ scope.row.agency }}
+          >{{ scope.row.name }}
         </template></el-table-column
       >
       <el-table-column label="操作" width="100">
@@ -163,17 +110,16 @@ export default {
         });
     },
     getList() {
-      get("/get_contestant_list", {
+      get("/get_children", {
         token: localStorage.getItem("token"),
         page_number: this.result.currentPage,
         page_size: 10,
-        starttime: this.form.starttime,
-        endtime: this.form.endtime
+        area: 1
       })
         .then(res => {
           console.log(res);
           if (res.successful) {
-            this.playerList = res.data.list;
+            this.playerList = res.data;
             this.result = res.data;
           } else {
             this.$message(res.message);

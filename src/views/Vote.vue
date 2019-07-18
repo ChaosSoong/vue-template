@@ -1,8 +1,8 @@
 <template>
   <div class="player">
     <el-form :inline="true" :model="form">
-      <el-form-item label="选手编号">
-        <el-input v-model="q" placeholder="选手编号">
+      <el-form-item label="编号">
+        <el-input v-model="q" placeholder="编号">
           <el-button
             slot="append"
             icon="el-icon-search"
@@ -10,7 +10,7 @@
           ></el-button>
         </el-input>
       </el-form-item>
-      <el-form-item label="开始时间">
+      <!-- <el-form-item label="开始时间">
         <el-date-picker
           v-model="form.starttime"
           format="yyyyMMdd"
@@ -25,13 +25,13 @@
           value-format="yyyyMMdd"
         >
         </el-date-picker>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item>
         <el-button type="primary" @click="submit">查询</el-button>
-        <el-button @click="exportExcel">导出表格</el-button>
+        <!-- <el-button @click="exportExcel">导出表格</el-button> -->
       </el-form-item>
     </el-form>
-    <el-table :data="playerList" border style="width: 100%">
+    <el-table :data="playerList" border style="width: 100%" v-show="false">
       <el-table-column label="序号">
         <template slot-scope="scope"
           >{{ scope.row.no }}
@@ -78,7 +78,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="search-form-pagination">
+    <div class="search-form-pagination" v-show="false">
       <el-pagination
         :current-page="result.currentPage"
         :page-sizes="[10]"
@@ -114,7 +114,7 @@ export default {
   name: "player",
   data() {
     return {
-      q: "谭梦",
+      q: "",
       form: {
         user: "",
         date: "",
@@ -160,7 +160,7 @@ export default {
         .then(res => {
           console.log(res);
           if (res.successful) {
-            this.playerList = res.data.list;
+            this.playerList = [];
             this.result = res.data;
           } else {
             this.$message(res.message);

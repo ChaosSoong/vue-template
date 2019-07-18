@@ -70,23 +70,21 @@
     <el-dialog title="新增账户" :visible.sync="dialogVisible" width="60%">
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="用户名">
-          <el-input v-model="form.username"></el-input>
+          <el-input v-model="username"></el-input>
         </el-form-item>
         <el-form-item label="密码">
-          <el-input v-model="form.password" type="password"></el-input>
+          <el-input v-model="password" type="password"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false"
-          >确 定</el-button
-        >
+        <el-button type="primary" @click="addAccount">确 定</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 <script>
-import { get } from "../utils/";
+import { get, post } from "../utils/";
 export default {
   name: "player",
   data() {
@@ -98,6 +96,8 @@ export default {
         starttime: "",
         endtime: ""
       },
+      username: "",
+      password: "",
       playerList: [],
       result: { item_total: 0, page_total: 0, currentPage: 1 },
       dialogVisible: false,
@@ -108,6 +108,27 @@ export default {
     this.getList();
   },
   methods: {
+    addAccount() {
+      get("/myregister", {
+        token: localStorage.getItem("token"),
+        username: this.username,
+        password: this.password,
+        area: 1
+      })
+        .then(res => {
+          console.log(res);
+          if (res.successful) {
+            this.$message("添加成功");
+            this.getList();
+          } else {
+            this.$message(res.message);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      this.dialogVisible = false;
+    },
     getUser() {
       get("/get_contestant_info", {
         token: localStorage.getItem("token"),

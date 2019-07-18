@@ -137,7 +137,7 @@ export default {
   name: "player",
   data() {
     return {
-      q: "谭梦",
+      q: "",
       form: {
         user: "",
         date: "",
