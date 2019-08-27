@@ -63,7 +63,7 @@ module.exports = {
   // 第三方插件配置
   pluginOptions: {
     vconsole: {
-      enable: env !== "production"
+      enable: false // env !== "production"
     },
     // Stylus 全局变量在其他文件无法使用
     "style-resources-loader": {
