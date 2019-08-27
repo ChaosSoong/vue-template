@@ -53,7 +53,8 @@ module.exports = {
       .set("@view", path.resolve(__dirname, "src/views"));
 
     config.externals({
-      // wx: "wx"
+      vue: "Vue",
+      axios: "axios"
     });
   },
 
